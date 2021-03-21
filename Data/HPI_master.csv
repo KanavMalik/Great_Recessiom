@@ -1,0 +1,49 @@
+State,Time_Series,HPI
+California,2003,228.18
+California,2004,280.158125
+California,2005,343.39875
+California,2006,371.095625
+California,2007,346.4575
+California,2008,274.79625
+California,2009,236.904375
+California,2010,227.57
+California,2011,213.219375
+California,2012,215.98875
+California,2013,245.585
+California,2014,273.0425
+Florida,2003,207.64375
+Florida,2004,243.19
+Florida,2005,301.899375
+Florida,2006,344.964375
+Florida,2007,333.781875
+Florida,2008,273.885625
+Florida,2009,231.206875
+Florida,2010,211.045625
+Florida,2011,197.358125
+Florida,2012,200.614375
+Florida,2013,217.008125
+Florida,2014,233.093125
+Massachusetts,2003,319.3175
+Massachusetts,2004,358.31125
+Massachusetts,2005,395.11
+Massachusetts,2006,402.65875
+Massachusetts,2007,391.8525
+Massachusetts,2008,367.696875
+Massachusetts,2009,353.715
+Massachusetts,2010,343.741875
+Massachusetts,2011,336.56625
+Massachusetts,2012,336.744375
+Massachusetts,2013,347.33
+Massachusetts,2014,361.679375
+North Carolina,2003,183.510625
+North Carolina,2004,192.109375
+North Carolina,2005,205.535
+North Carolina,2006,220.729375
+North Carolina,2007,231.144375
+North Carolina,2008,230.511875
+North Carolina,2009,224.396875
+North Carolina,2010,214.000625
+North Carolina,2011,205.141875
+North Carolina,2012,203.389375
+North Carolina,2013,206.7775
+North Carolina,2014,211.084375

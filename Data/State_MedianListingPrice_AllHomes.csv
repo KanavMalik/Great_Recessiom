@@ -1,0 +1,41 @@
+State,Time_Series,Median_Listing_Price
+California,2004,331735.5833
+California,2005,297035.6667
+California,2006,308558.3333
+California,2007,390266.6667
+California,2008,418570.8333
+California,2009,440733.3333
+California,2010,479864.9167
+California,2011,502033.9167
+California,2012,528190.4167
+California,2013,542049.5
+Florida,2004,187340.6667
+Florida,2005,176125
+Florida,2006,179165.8333
+Florida,2007,197990.8333
+Florida,2008,215255.0417
+Florida,2009,236031.4167
+Florida,2010,258831.6667
+Florida,2011,279526.0833
+Florida,2012,291299.1667
+Florida,2013,296973.625
+Massachussets,2004,328057.2917
+Massachussets,2005,310816.6667
+Massachussets,2006,317625
+Massachussets,2007,338033.3333
+Massachussets,2008,348766.6667
+Massachussets,2009,355900
+Massachussets,2010,385425
+Massachussets,2011,418208.125
+Massachussets,2012,439975
+Massachussets,2013,463347.625
+North Carolina,2004,197000
+North Carolina,2005,187441.2083
+North Carolina,2006,182233.3333
+North Carolina,2007,192233.3333
+North Carolina,2008,198154.5417
+North Carolina,2009,212596.875
+North Carolina,2010,227750
+North Carolina,2011,246168.0833
+North Carolina,2012,262455.375
+North Carolina,2013,273092.5833

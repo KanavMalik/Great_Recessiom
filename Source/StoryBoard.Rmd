@@ -1,0 +1,476 @@
+---
+title: "StoryBoard-The Great Recession"
+author: "Kanav Malik"
+date: "April 14 2020"
+output: 
+  flexdashboard::flex_dashboard:
+    storyboard: true
+    social: menu
+    source: embed
+---
+
+```{r setup, warning=FALSE ,include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, Loading libraries,warning=FALSE,echo= FALSE}
+
+library(highcharter)
+library(dplyr)
+library(viridisLite)
+library(forecast)
+library(treemap)
+library(flexdashboard)
+library(plotly)
+library(ggplot2)
+library(knitr)
+library(lubridate)
+
+```
+
+```{r, Loading data saved in my Github directory,warning=FALSE, echo=FALSE}
+
+# Data Description : Zillow Housing Price Index(seasonally adjusted) for all homes(SFR,Condo/Co-op)
+# Source : Zillow
+github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/State_Zhvi_AllHomes.csv"
+Housing_Price_Index <- read.csv(github_raw)
+
+# Data Description : Median Sales Price(seasonally adjusted) for all homes(SFR,Condo/Co-op)
+# Source : Zillow
+github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/Sale_Prices_State.csv"
+MedianSales_Price_Index <- read.csv(github_raw)
+
+# Data Description : Housing Price Index provided by FHFA
+# Source : Federal Housing Finance Agency
+github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/HPI_master.csv"
+HPI_FHFA <- read.csv(github_raw)
+
+# Data Description : Homeowners Vacancy rate
+# Source : Fred collected stats from U.S. Bureau of Labor Statistics
+github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/Homeowner_Vacancy_rate.csv"
+Homeowners_Vacancy_Rate <- read.csv(github_raw)
+
+# Data Description : Average yearly urban consumer inflation
+# Source : U.S. Bureau of Labor Statistics
+github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/CPI_All_Urban_Consumers.csv"
+Urban_Consumer_Inflation <- read.csv(github_raw)
+
+# Data Description : Unemployment Rate
+# Source : Fred collected stats from U.S. Bureau of Labor Statistics
+github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/UNRATE.csv"
+Unemployment_Rate <- read.csv(github_raw)
+
+# Data Description : Gross Domestic Product(GDP)
+# Source : Fred collected stats from U.S. Bureau of Labor Statistics
+github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/GDP.csv"
+GDP <- read.csv(github_raw)
+
+# Data Description : Income per person or GDP oer person
+# Source : Fred collected stats from U.S. Bureau of Labor Statistics
+github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/GDPCapita.csv"
+Income_per_Capita <- read.csv(github_raw)
+
+# Data Description : Ratio of total value of listed shares in stock market(called Market Cap) to GDP 
+# Source : Fred collected stats from World Bank
+github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/market_cap_to_GDP.csv"
+MarketCap_to_GDP <- read.csv(github_raw)
+
+# Data Description : NASDAQ 100 index 
+# Source : Fred collected stats from NASDAQ OMX Group
+github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/NASDAQ100.csv"
+NASDAQ_Index <- read.csv(github_raw)
+
+# Data Description : Large Cap Index(index for large sized companies)
+# Source : Wilshire Associates
+github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/US_Large_Cap.csv"
+Large_Cap_Index <- read.csv(github_raw)
+
+# Data Description : Real Estate Securites Index
+# Source : Wilshire Associates
+github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/US_Real_Estate_Securities.csv"
+RealEstate_Securities_Index <- read.csv(github_raw)
+
+# Data Description : 10 year yield on Government Bond
+# Source : Fred collected stats from World Bank
+github_raw <-"https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/US_10_year_bond_yield.csv"
+GovtBond_Yield10Yr <- read.csv(github_raw)
+
+# Data Description : Ratio of Market Value of Pension Assets to GDP
+# Source : Fred collected stats from World Bank
+github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/Pension_assets_to_GDP.csv"
+PensionAssets_to_GDP <- read.csv(github_raw)
+
+# Data Description : Total Market Value of mutual funds,debt securties and loans
+# Source : Fred collected stats from Board of Governors of the federal reserve system
+github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/MF_debtsecurties_loans.csv"
+MF_Debtsecurities_Loan <- read.csv(github_raw)
+
+# Data Description : Non performing Assets of commercial banks
+# Source : Fred collected stats from World Bank
+github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/US_NPA_Commerial_Bank.csv"
+NPAs_Commercial <- read.csv(github_raw)
+
+# Data Description : State Poverty Index
+# Source : Fred
+github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/StatePoverty.csv"
+Poverty_Index <- read.csv(github_raw)
+
+```
+
+### Zillow Housing Price Index{data-commentary-width=300}
+```{r,Zillow Housing Price Index, echo= FALSE}
+
+p <- Housing_Price_Index %>%
+    group_by(State) %>%
+    ggplot(data = .,fill= State) +
+    geom_line(mapping = 
+                   aes(x = Time_Series, y = HPI,fill=State))+
+    geom_point(mapping = 
+                   aes(x = Time_Series, y = HPI,fill=State)) +
+    labs(title= "Zillow Housing Price Index(seasonally adjusted) for all homes(SFR,Condo/Co-op)",x="Year",y="Housing Price Index($000s)")
+    
+    plotly::ggplotly(p)
+    
+```
+
+***
+There was a drastic fall in the Housing Price Index (estimated by Zillow) between October 2007 and April 2009.California, Florida and Massachusetts had the greatest impact
+
+### Zillow Median Sales Price{data-commentary-width=300}
+```{r,Zillow Median Sales Price, echo= FALSE}
+
+p <- MedianSales_Price_Index %>%
+    group_by(State) %>%
+    ggplot(data = .,colour= State) +
+    geom_line(mapping = 
+                   aes(x = Time_Series, y = Median_Sales_Price,fill=State)) +
+    geom_point(mapping = 
+                   aes(x = Time_Series, y = Median_Sales_Price,fill=State)) +
+    labs(title= "Median Sales Price(seasonally adjusted) for all homes(SFR,Condo/Co-op)",x="Year",y="Median Sales Price($000s)")
+
+    
+   plotly::ggplotly(p)
+    
+```
+
+***
+The median sales price for all homes combined(SFR, Condo/Co-Op) decreased significantly between 2008 and mid-2009.The data is only available after 2008
+
+### Housing Price Index provided by Federal Housing Finance Agency {data-commentary-width=300}
+```{r,FHFA Housing Price Index, echo= FALSE}
+
+p <- HPI_FHFA %>%
+    ggplot(data = .,colour= State) +
+    geom_line(mapping = 
+                   aes(x = Time_Series, y = HPI,fill=State)) +
+    geom_point(mapping = 
+                   aes(x = Time_Series, y = HPI,fill=State)) +
+    labs(title= "Housing Price Index by Federal Housing Finance Agency",x="Year",y="Housing Price Index")
+
+    
+  plotly::ggplotly(p)
+    
+```
+
+***
+Drastic fall in the housing price index from 2007 and it's effects continuing till 2009.The index keeps falling between 2009 and 2011( though at a lower rate) after which it starts to improve after 2011
+
+
+### Homeowners Vacancy Rate {data-commentary-width=300}
+```{r,Homeowners Vacanacy Rate,echo=FALSE}
+
+p <- Homeowners_Vacancy_Rate %>%
+     ggplot(data=.) +
+     geom_line(mapping = 
+                   aes(x=Year,y= vacancy_rate)) +
+     geom_point(mapping = 
+                   aes(x=Year,y= vacancy_rate)) +
+     labs(title= "Homeowners vacancy Rate",x="Year",y="Vacancy Rate")
+
+    
+   plotly::ggplotly(p)
+
+```
+
+***
+Homeowners vacancy rate increased significantly between 2006 and 2007 when bubble in the real estate market was being formed.The vacancy rate reached its peak in 2008.It finally starts improving after April 2010 
+
+### Urban Consumer Inflation {data-commentary-width=300}
+```{r,Urban Consumer Inflation, echo= FALSE}
+
+p <- Urban_Consumer_Inflation %>%
+    ggplot(data = .) +
+    geom_line(mapping = 
+                   aes(x = Year, y = Inflation)) +
+    geom_point(mapping = 
+                   aes(x = Year, y = Inflation)) +
+    labs(title= "Average yearly urban consumer inflation",x="Year",y="Inflation")
+
+    
+    plotly::ggplotly(p)
+
+    ```
+
+***
+Average yearly urban consumer inflation   for all items increased in 2007,2008 and is negative in 2009.Negative inflation is as harmful to economy as a high positive inflation
+
+### Unemployment Rate {data-commentary-width=300}
+    ```{r,Unemployment Rate, echo= FALSE}
+
+p <- Unemployment_Rate %>%
+    ggplot(data = .) +
+    geom_line(mapping = 
+                   aes(x = observation_date, y = UNRATE)) +
+        geom_point(mapping = 
+                   aes(x = observation_date, y = UNRATE)) +
+    labs(title= "Unemployment Rate",x="Year")
+
+    
+    plotly::ggplotly(p)
+```
+
+***
+The unemployment rate for all sectors combined excluding the armed forces increases at a fast rate between 2007 and 2009.It increases marginally between 2009 and 2010 where it is the highest at 9.6%.It has been the highest unemployment rate in the entire time frame
+
+### Gross Domestic Product {data-commentary-width=300}
+```{r,GDP,echo=FALSE}
+
+p <- GDP %>%
+    ggplot(data = .) +
+    geom_line(mapping = 
+                   aes(x = Year, y = GDP)) +
+    geom_point(mapping = 
+                   aes(x = Year, y = GDP)) +
+    labs(title= "Gross Domestic Product",x="Year",y="GDP($billion)")
+
+    
+  plotly::ggplotly(p)
+
+```
+
+***
+Real GDP has fallen between 2007 and 2009.Except this time period, it has always increased in the entire time frame being looked at
+
+### Income per capita {data-commentary-width=300}
+```{r,Income per Capita,echo=FALSE}
+
+p <- Income_per_Capita %>%
+    ggplot(data = .) +
+    geom_line(mapping = 
+                   aes(x = Year, y = GDPCapita)) +
+    geom_point(mapping = 
+                   aes(x = Year, y = GDPCapita)) +
+    labs(title= "Income per capita",x="Year",y="Income per Capita")
+
+    
+  plotly::ggplotly(p)
+
+```
+
+***
+Income per capita( or Income per person or GDP per capita) has fallen between 2007 and 2009.Except this time period, it has always increased in the entire time frame
+
+### Poverty Index{data-commentary-width=300}
+```{r,State Poverty Index,echo=FALSE}
+
+p <- Poverty_Index %>%
+    group_by(State)%>%
+    ggplot(data = .) +
+    geom_line(mapping = 
+                   aes(x = Date, y = Poverty_Index,fill=State)) +
+    geom_point(mapping = 
+                   aes(x = Date, y = Poverty_Index,fill=State)) +
+    labs(title= "State Poverty Index",x="Year",y="Index")
+
+    
+  plotly::ggplotly(p)
+
+```
+
+***
+Poverty Index has increased between 2006 and 2007 for Michigan while it decreased for Arizona, California and Florida.
+After the recession hit in 2007, there was a sharp increase in the poverty Index for all the 4 states between 2007 and 2011. After 2011, the poverty index for all 4 States starts falling again
+
+### Ratio of Market Cap to GDP {data-commentary-width=300}
+```{r, Ratio of Market Cap to GDP,echo=FALSE}
+
+p <- MarketCap_to_GDP %>%
+    ggplot(data = .) +
+    geom_line(mapping = 
+                   aes(x = DATE, y = DDDM01USA156NWDB)) +
+    geom_point(mapping = 
+                   aes(x = DATE, y = DDDM01USA156NWDB)) +
+    labs(title= "Ratio of total value of listed shares in stock market(called Market Cap) to GDP ",x="Year",y="Ratio") +
+    
+     theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+    
+ plotly::ggplotly(p)
+
+```
+
+***
+Value of listed shares to GDP fell drastically between 2007 and 2009.The ratio fell from 138 in 2007 to 110 in 2008 and 93 in 2009
+
+### NASDAQ 100 Index {data-commentary-width=300}
+```{r, NASDAQ 100 index,echo=FALSE}
+
+NASDAQ_Index$DATE <- as.character(NASDAQ_Index$DATE)
+
+NASDAQ_Index$DATE <- as.Date(NASDAQ_Index$DATE,
+                        format = "%m/%d/%Y")
+
+p <- NASDAQ_Index %>%
+    ggplot(data = .) +
+    geom_point(mapping = 
+                   aes(x = DATE, y = NASDAQ100)) +
+    labs(title= "NASDAQ 100 index ",x="Year",y="Index") +
+     theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+    plotly::ggplotly(p)
+```
+
+***
+NASDAQ index is the index for top 100 companies on the US stock exchange.The NASDAQ 100 intraday index kept on falling between August 2007 and April 2009
+
+### Large Capital Index{data-commentary-width=300}
+```{r, Large Cap index,echo=FALSE}
+
+Large_Cap_Index$DATE <- as.character(Large_Cap_Index$DATE)
+
+Large_Cap_Index$DATE <- as.Date(Large_Cap_Index$DATE,
+                        format = "%m/%d/%Y")
+
+p <- Large_Cap_Index %>%
+    ggplot(data = .) +
+    geom_point(mapping = 
+                   aes(x = DATE, y = WILLLRGCAP)) +
+    geom_line(mapping = 
+                   aes(x = DATE, y = WILLLRGCAP)) +
+    labs(title= "Large Cap index ",x="Year",y="Index") +
+     theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+    plotly::ggplotly(p)
+```
+
+***
+The Large cap index is the index for the companies with high market capitalization. It has fallen significantly between mid-2007 and April 2009
+
+### Real Estate Securities Index{data-commentary-width=300}
+```{r, Real Estate Securities Index,echo=FALSE}
+
+RealEstate_Securities_Index$DATE <- as.character(RealEstate_Securities_Index$DATE)
+
+RealEstate_Securities_Index$DATE <- as.Date(RealEstate_Securities_Index$DATE,
+                        format = "%m/%d/%Y")
+
+p <- RealEstate_Securities_Index %>%
+    ggplot(data = .) +
+    geom_point(mapping = 
+                   aes(x = DATE, y = WILLRESIPR)) +
+    geom_line(mapping = 
+                   aes(x = DATE, y = WILLRESIPR)) +
+    labs(title= "Real Estate Securities index ",x="Year",y="Index") +
+     theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+     theme(axis.text.y = element_text(angle = 90, hjust = 1))
+
+
+    plotly::ggplotly(p)
+```
+
+***
+Real Estate securities index is the index for Real Estate stocks and real estate investment management firms stocks. It has fallen significantly between March 2007 and April 2009
+
+### Yield on 10 year government bond{data-commentary-width=300}
+```{r, 10 year yield Govt Bond,echo=FALSE}
+
+GovtBond_Yield10Yr$DATE <- as.character(GovtBond_Yield10Yr$DATE)
+
+GovtBond_Yield10Yr$DATE <- as.Date(GovtBond_Yield10Yr$DATE,
+                        format = "%m/%d/%Y")
+
+p <- GovtBond_Yield10Yr %>%
+    ggplot(data = .) +
+    geom_point(mapping = 
+                   aes(x = DATE, y = IRLTLT01USM156N)) +
+    geom_line(mapping = 
+                   aes(x = DATE, y = IRLTLT01USM156N)) +
+    labs(title= "Yield on 10 year government bond ",x="Year",y="Yield")
+
+    plotly::ggplotly(p)
+```
+
+***
+The yield on bonds is the governments view of the return it will be able to achieve in the next 10 years.The yield on 10-year government bond has decreased from 5% in June 2007 to 2.4% December 2018.The government bond are sovereign backed and only offers a risk-free return as there is no default risk associated with government bonds. The reduction in bond yields during this period might be because the government expected a low economic activity in the future
+
+### Ratio of Market Value of Pension Assets to GDP{data-commentary-width=300}
+```{r, Ratio of Market Value of Pension  Assets to GDP,echo=FALSE}
+
+PensionAssets_to_GDP$DATE <- as.character(PensionAssets_to_GDP$DATE)
+
+PensionAssets_to_GDP$DATE <- as.Date(PensionAssets_to_GDP$DATE,
+                        format = "%d/%m/%Y")
+
+p <- PensionAssets_to_GDP %>%
+    ggplot(data = .) +
+    geom_point(mapping = 
+                   aes(x = year(DATE), y = DDDI13USA156NWDB)) +
+    geom_line(mapping = 
+                   aes(x = year(DATE), y = DDDI13USA156NWDB)) +
+     labs(title= "Ratio of pension assets to GDP ",x="Year",y="Pension Assets/GDP")
+
+
+    plotly::ggplotly(p)
+```
+
+***
+The ratio of Pension Assets to GDP(total of Defined Benefit,Defined Contribution schemes) fell between 2007 and 2008. The Pension Assets were affected because they had money invested in stock market and Collateral debt obligations( bundles of subprime mortgages).The ratio of Pension assets market value  to GDP has fallen between 2007 and 2008 significantly. The GDP hasn't fallen much,so the main impact has been due to the steep decline in Pension Assets market value. However, it has improved after 2008
+
+### Total market value of mutual funds, debt securities and loans{data-commentary-width=300}
+```{r, Ratio of Market Value of Pension Assets to GDP,echo=FALSE}
+
+MF_Debtsecurities_Loan$DATE <- as.character(MF_Debtsecurities_Loan$DATE)
+
+MF_Debtsecurities_Loan$DATE <- as.Date(MF_Debtsecurities_Loan$DATE,
+                        format = "%m/%d/%Y")
+
+p <- MF_Debtsecurities_Loan %>%
+    ggplot(data = .) +
+    geom_point(mapping = 
+                   aes(x = DATE, y = MFTCMAHDFS)) +
+    geom_line(mapping = 
+                   aes(x = DATE, y = MFTCMAHDFS)) +
+     labs(title= "Total market value of mutual funds, debt securities and loans ",x="Year",y="Total Value")
+
+
+    plotly::ggplotly(p)
+```
+
+
+***
+A short period of drastic fall in total market value of mutual funds, debt securities and loans is observed between April 2008 and October 2008.However the market improved after this short period of downfall
+
+### Non-performing Assets of Commercial Banks{data-commentary-width=300}
+```{r, NPAs,echo=FALSE}
+
+NPAs_Commercial$DATE <- as.character(NPAs_Commercial$DATE)
+
+NPAs_Commercial$DATE <- as.Date(NPAs_Commercial$DATE,
+                        format = "%m/%d/%Y")
+
+p <- NPAs_Commercial %>%
+    ggplot(data = .) +
+    geom_point(mapping = 
+                   aes(x = DATE, y = USNP)) +
+    geom_line(mapping = 
+                   aes(x = DATE, y = USNP)) +
+     labs(title= "Non-performing Assets",x="Year",y="Total Value($thousand)")
+
+
+    plotly::ggplotly(p)
+```
+
+***
+The final nail in the coffin was the increase in the non-performing assets of the commercial banks at an all-time high.The Non Performing Assets for Commercial Banks in the US started increasing from October 2006. The increase is drastic between April 2007 and  October 2009.The NPA's reach it's peek in January 2010 from $46 billion in October 2006 to $374 billion in January 2010 after which it starts decreasing
+
+    
