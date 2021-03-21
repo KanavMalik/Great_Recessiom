@@ -15,11 +15,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r, Loading libraries,warning=FALSE,echo= FALSE}
 
-library(highcharter)
 library(dplyr)
 library(viridisLite)
 library(forecast)
-library(treemap)
 library(flexdashboard)
 library(plotly)
 library(ggplot2)
@@ -28,91 +26,92 @@ library(lubridate)
 
 ```
 
+
 ```{r, Loading data saved in my Github directory,warning=FALSE, echo=FALSE}
 
 # Data Description : Zillow Housing Price Index(seasonally adjusted) for all homes(SFR,Condo/Co-op)
 # Source : Zillow
-github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/State_Zhvi_AllHomes.csv"
+github_raw <- "https://raw.githubusercontent.com/KanavMalik/Data_Repository/master/State_Zhvi_AllHomes.csv"
 Housing_Price_Index <- read.csv(github_raw)
 
 # Data Description : Median Sales Price(seasonally adjusted) for all homes(SFR,Condo/Co-op)
 # Source : Zillow
-github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/Sale_Prices_State.csv"
+github_raw <- "https://raw.githubusercontent.com/KanavMalik/Data_Repository/master/Sale_Prices_State.csv"
 MedianSales_Price_Index <- read.csv(github_raw)
 
 # Data Description : Housing Price Index provided by FHFA
 # Source : Federal Housing Finance Agency
-github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/HPI_master.csv"
+github_raw <- "https://raw.githubusercontent.com/KanavMalik/Data_Repository/master/HPI_master.csv"
 HPI_FHFA <- read.csv(github_raw)
 
 # Data Description : Homeowners Vacancy rate
 # Source : Fred collected stats from U.S. Bureau of Labor Statistics
-github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/Homeowner_Vacancy_rate.csv"
+github_raw <- "https://raw.githubusercontent.com/KanavMalik/Data_Repository/master/Homeowner_Vacancy_rate.csv"
 Homeowners_Vacancy_Rate <- read.csv(github_raw)
 
 # Data Description : Average yearly urban consumer inflation
 # Source : U.S. Bureau of Labor Statistics
-github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/CPI_All_Urban_Consumers.csv"
+github_raw <- "https://raw.githubusercontent.com/KanavMalik/Data_Repository/master/CPI_All_Urban_Consumers.csv"
 Urban_Consumer_Inflation <- read.csv(github_raw)
 
 # Data Description : Unemployment Rate
 # Source : Fred collected stats from U.S. Bureau of Labor Statistics
-github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/UNRATE.csv"
+github_raw <- "https://raw.githubusercontent.com/KanavMalik/Data_Repository/master/UNRATE.csv"
 Unemployment_Rate <- read.csv(github_raw)
 
 # Data Description : Gross Domestic Product(GDP)
 # Source : Fred collected stats from U.S. Bureau of Labor Statistics
-github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/GDP.csv"
+github_raw <- "https://raw.githubusercontent.com/KanavMalik/Data_Repository/master/GDP.csv"
 GDP <- read.csv(github_raw)
 
 # Data Description : Income per person or GDP oer person
 # Source : Fred collected stats from U.S. Bureau of Labor Statistics
-github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/GDPCapita.csv"
+github_raw <- "https://raw.githubusercontent.com/KanavMalik/Data_Repository/master/GDPCapita.csv"
 Income_per_Capita <- read.csv(github_raw)
 
 # Data Description : Ratio of total value of listed shares in stock market(called Market Cap) to GDP 
 # Source : Fred collected stats from World Bank
-github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/market_cap_to_GDP.csv"
+github_raw <- "https://raw.githubusercontent.com/KanavMalik/Data_Repository/master/market_cap_to_GDP.csv"
 MarketCap_to_GDP <- read.csv(github_raw)
 
 # Data Description : NASDAQ 100 index 
 # Source : Fred collected stats from NASDAQ OMX Group
-github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/NASDAQ100.csv"
+github_raw <- "https://raw.githubusercontent.com/KanavMalik/Data_Repository/master/NASDAQ100.csv"
 NASDAQ_Index <- read.csv(github_raw)
 
 # Data Description : Large Cap Index(index for large sized companies)
 # Source : Wilshire Associates
-github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/US_Large_Cap.csv"
+github_raw <- "https://raw.githubusercontent.com/KanavMalik/Data_Repository/master/US_Large_Cap.csv"
 Large_Cap_Index <- read.csv(github_raw)
 
 # Data Description : Real Estate Securites Index
 # Source : Wilshire Associates
-github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/US_Real_Estate_Securities.csv"
+github_raw <- "https://raw.githubusercontent.com/KanavMalik/Data_Repository/master/US_Real_Estate_Securities.csv"
 RealEstate_Securities_Index <- read.csv(github_raw)
 
 # Data Description : 10 year yield on Government Bond
 # Source : Fred collected stats from World Bank
-github_raw <-"https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/US_10_year_bond_yield.csv"
+github_raw <-"https://raw.githubusercontent.com/KanavMalik/Data_Repository/master/US_10_year_bond_yield.csv"
 GovtBond_Yield10Yr <- read.csv(github_raw)
 
 # Data Description : Ratio of Market Value of Pension Assets to GDP
 # Source : Fred collected stats from World Bank
-github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/Pension_assets_to_GDP.csv"
+github_raw <- "https://raw.githubusercontent.com/KanavMalik/Data_Repository/master/Pension_assets_to_GDP.csv"
 PensionAssets_to_GDP <- read.csv(github_raw)
 
 # Data Description : Total Market Value of mutual funds,debt securties and loans
 # Source : Fred collected stats from Board of Governors of the federal reserve system
-github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/MF_debtsecurties_loans.csv"
+github_raw <- "https://raw.githubusercontent.com/KanavMalik/Data_Repository/master/MF_debtsecurties_loans.csv"
 MF_Debtsecurities_Loan <- read.csv(github_raw)
 
 # Data Description : Non performing Assets of commercial banks
 # Source : Fred collected stats from World Bank
-github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/US_NPA_Commerial_Bank.csv"
+github_raw <- "https://raw.githubusercontent.com/KanavMalik/Data_Repository/master/US_NPA_Commerial_Bank.csv"
 NPAs_Commercial <- read.csv(github_raw)
 
 # Data Description : State Poverty Index
 # Source : Fred
-github_raw <- "https://raw.githubusercontent.com/kanavmalik93/IAF-605--Assignment-2/master/StatePoverty.csv"
+github_raw <- "https://raw.githubusercontent.com/KanavMalik/Data_Repository/master/StatePoverty.csv"
 Poverty_Index <- read.csv(github_raw)
 
 ```
