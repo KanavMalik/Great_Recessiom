@@ -1,7 +1,6 @@
 ---
 title: "The Great Recession"
 author: "Kanav Malik"
-date: "April 14 2020"
 output: 
   flexdashboard::flex_dashboard :
   runtime : Shiny
@@ -13,11 +12,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r, Loading libraries,warning=FALSE,echo= FALSE}
 
-library(highcharter)
 library(dplyr)
 library(viridisLite)
 library(forecast)
-library(treemap)
 library(flexdashboard)
 library(plotly)
 library(ggplot2)
