@@ -124,6 +124,7 @@ The Great Recession was a period of economic downturn which was observed from 20
 
 One interesting thing regarding the Great Recession was that the causes of the economic crisis could not be blamed on the housing market alone.The interest rates on housing loans were lowered by the government to boost growth in housing sector after a minor recession in 2000.The concept of bundling of mortgage assets ( under Collateral Debt Obligations commonly referred to as CDOs) with other types of financial securities was becoming popular and investment banks started using it to take these bundles of loans from banks and sell them to other big investors in market like pension funds, insurance companies.This allowed the primary banks to give housing loan to subprime borrowers( borrowers with poor credit history) as the banks could pass on the risk of default to the third party to whom they sold subprime mortgage bundled funds.Thus the low interest on housing loans and easy availability of subprime mortgage allowed a huge housing bubble to build up until it finally burst when the subprime borrowers started defaulting on loans.
 
+Note : The Housing Price Indexes , Median Sales Price Index, State Poverty Index have been compared between specific states.
 
 # Real Estate Market
 
