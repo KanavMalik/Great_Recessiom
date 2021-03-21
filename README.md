@@ -1,1 +1,1 @@
-Discussion of the Financial and economic recession of 2008-09
+Discussion of the Financial and Economic recession of 2008-09
